@@ -5,9 +5,7 @@ import itis.parsing2.annotations.NotBlank;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
@@ -62,8 +60,7 @@ public class FactoryParsingServiceImpl implements FactoryParsingService {
         return mapOfProps;
     }
 
-    private Factory parseFactoryFromMap(Map<String, String> propsMap) throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException
-    {
+    private Factory parseFactoryFromMap(Map<String, String> propsMap) throws IllegalAccessException {
         Class<Factory> factoryClass = Factory.class;
 
         Factory park = null;
