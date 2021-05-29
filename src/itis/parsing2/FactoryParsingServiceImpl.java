@@ -63,10 +63,10 @@ public class FactoryParsingServiceImpl implements FactoryParsingService {
     private Factory parseFactoryFromMap(Map<String, String> propsMap) throws IllegalAccessException {
         Class<Factory> factoryClass = Factory.class;
 
-        Factory park = null;
+        Factory factory = null;
         try
         {
-            park = factoryClass.newInstance();
+            factory = factoryClass.newInstance();
         }
         catch (InstantiationException e)
         {
@@ -86,8 +86,10 @@ public class FactoryParsingServiceImpl implements FactoryParsingService {
 
             NotBlank notBlank = field.getDeclaredAnnotation(NotBlank.class);
 
-            String trueName = field.getName();
-            String strValue = propsMap.get(trueName);
+            String realName = field.getName();
+
+
+            String strValue = propsMap.get(realName);
 
             boolean hasErrorsForCurrentField = true;
 
@@ -111,7 +113,7 @@ public class FactoryParsingServiceImpl implements FactoryParsingService {
             if (!hasErrorsForCurrentField)
             {
                 Class isRightClass = field.getType();
-                field.set(park, castToClass(strValue, isRightClass));
+                field.set(factory, castToClass(strValue, isRightClass));
             }
         }
 
@@ -119,7 +121,7 @@ public class FactoryParsingServiceImpl implements FactoryParsingService {
         {
             throw new FactoryParsingException("Ошибка парсинга - ", errors);
         } else {
-            return park;
+            return factory;
         }
     }
     private Object castToClass (String strValue, Class c)
